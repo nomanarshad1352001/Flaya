@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Fraunces", "Georgia", serif;
+  --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
+
+  --color-porcelain: #fbfaf7;
+  --color-ivory: #f4f1ea;
+  --color-sand: #eae4d9;
+  --color-line: #e6e0d5;
+  --color-ink: #1c1917;
+  --color-smoke: #57504a;
+  --color-faint: #94897c;
+  --color-taupe: #8a7b6b;
+  --color-dune: #b9a98f;
+  --color-moss: #5f6152;
+  --color-clay: #a4573f;
+
+  --animate-marquee: marquee 32s linear infinite;
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.5s ease both;
+  --animate-shimmer: shimmer 1.8s linear infinite;
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+}
+
+/* -------- Light Black theme (soft dark) — swaps the full token palette -------- */
+[data-theme="dark"] {
+  --color-porcelain: #16140f;
+  --color-ivory: #201d18;
+  --color-sand: #2a251e;
+  --color-line: #363026;
+  --color-ink: #f1ede4;
+  --color-smoke: #b8aea0;
+  --color-faint: #827764;
+  --color-taupe: #b3a186;
+  --color-dune: #c4b294;
+  --color-moss: #a9af99;
+  --color-clay: #cd7559;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-porcelain);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-porcelain);
+}
+
+/* Hide scrollbars for rails */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Refined underline link */
+.link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  padding-bottom: 2px;
+}
+.link-underline:hover { background-size: 100% 1px; }
+
+/* Image treatment */
+.img-premium {
+  background: var(--color-ivory);
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 1.5px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+/* Custom snap behavior for product rails */
+.rail-snap {
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.rail-snap > * { scroll-snap-align: start; }
+
+/* Infinite marquee tracks (announcement bar, testimonial rows) */
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-dur, 40s) linear infinite;
+  will-change: transform;
+}
+.marquee-reverse { animation-direction: reverse; }
+.marquee-hover-pause:hover .marquee-track { animation-play-state: paused; }
+
+/* Hero slide progress */
+@keyframes hero-progress {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+.hero-progress {
+  transform-origin: left center;
+  animation: hero-progress 6s linear forwards;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
